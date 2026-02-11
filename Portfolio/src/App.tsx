@@ -1,16 +1,14 @@
-import { Canvas } from '@react-three/fiber'
-import './App.css'
+import SceneRoot from "./components/SceneRoot";
+import UIOverlay from "./components/UIOverlay";
+
+//add UIOverlay  under Scenre root or wherever 
+// , should put the pAGE itself in it
 
 export default function App() {
-
   return (
     <>
-      <Canvas>
-        <mesh>
-          <torusKnotGeometry args={[1, 0.4, 100, 16]} />
-          <meshStandardMaterial color={'#ff0000'} />
-        </mesh>
-      </Canvas>
+      <SceneRoot />
+      
     </>
   )
 }
