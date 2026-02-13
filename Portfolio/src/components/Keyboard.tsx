@@ -9,7 +9,7 @@ import { Language } from "../constants/language"
 
 export default function Keyboard() {
     //MODEL LOADING
-    const keyboardFrame = useGLTF('models/KeyBoardFrame.glb')
+    const keyboardFrame = useGLTF('models/KeyboardFrame.glb')
     
     //REFS
     const keyboardFrameRef = useRef<Mesh>(null)
