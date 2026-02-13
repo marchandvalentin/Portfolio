@@ -16,7 +16,7 @@ export default function Keycap(props: {baseKeyposition: [number, number, number]
     const keyHeightOnHover = 0.08
     const highKeyPosition: [number, number, number] = [ props.baseKeyposition[0], 
                                                         props.baseKeyposition[1] + keyHeightOnHover, 
-                                                        props.baseKeyposition[2]]
+                                                        props.baseKeyposition[2] + keyHeightOnHover]
 
     const { position } = useSpring<{ position: [number, number, number] }>({
         position: keyHovered ? highKeyPosition : props.baseKeyposition,

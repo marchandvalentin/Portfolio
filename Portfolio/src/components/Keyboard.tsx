@@ -21,7 +21,7 @@ export default function Keyboard() {
             />
 
            <Keycap 
-            baseKeyposition={[0, 0, 0]} />
+                baseKeyposition={[-2.4, 0.34, -3.3]} />
         </>
     )
 }
