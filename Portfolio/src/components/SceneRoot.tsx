@@ -6,7 +6,7 @@ import Keyboard from "./Keyboard";
 export default function SceneRoot() {
   return (
     <div className="w-full h-screen">
-      <Canvas>
+      <Canvas shadows>
         <Stage />
         <TV />
         <Keyboard />

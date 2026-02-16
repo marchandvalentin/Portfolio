@@ -1,17 +1,49 @@
-import { Clone, useGLTF } from "@react-three/drei"
-import { useRef, useState } from "react"
+import { Clone, useGLTF, useTexture } from "@react-three/drei"
+import { useEffect, useRef, useState } from "react"
 import { animated, useSpring } from "@react-spring/three"
+import { MeshStandardMaterial, SRGBColorSpace } from "three"
 import type { Group } from "three/examples/jsm/libs/tween.module.js"
 
-export default function Keycap(props: {baseKeyposition: [number, number, number], language?: string}) {
+export default function Keycap(props: {
+    baseKeyposition: [number, number, number], 
+    language?: string,
+    textureURL?: string
+    }) {
 
     //attributes
-    const label = props.language ? props.language : "default" // Default label if language is not provided
+    const def_language = props.language ? props.language : "default" // Default label if language is not provided
 
     //model loading
     const keycaps = useGLTF('models/KeyCap.glb')
     const keycapRef = useRef<Group>(null)
     
+
+    //texture loading, if there is no link then it loads a white base texture 
+    //console.log(`Loading texture for language: ${def_language}, URL: ${props.textureURL}, texture ?: ${props.textureURL ? "Yes" : "No"}`)
+    const textureUrl = props.textureURL ? props.textureURL : "Textures/base_texture.png"
+    const texture = useTexture(textureUrl)
+
+    // Appliying texture to the keycap model
+    useEffect(() => {
+        if (keycapRef.current && texture) {
+            texture.colorSpace = SRGBColorSpace
+            texture.needsUpdate = true
+            keycapRef.current.traverse((child: any) => {
+                if (child.isMesh) {
+                    const material = new MeshStandardMaterial({
+                        map: texture,
+                        emissive: 0xffffff,
+                        emissiveIntensity: 0,
+                    })
+                    material.color.setHex(0xffffff)
+                    material.toneMapped = false
+                    child.material = material
+                    child.castShadow = true
+                    child.receiveShadow = true
+                }
+            })
+        }
+    }, [texture])
 
     //Calculating highKey position based on base position
     const keyHeightOnHover = 0.1
@@ -20,7 +52,7 @@ export default function Keycap(props: {baseKeyposition: [number, number, number]
       props.baseKeyposition[1] + keyHeightOnHover, 
       props.baseKeyposition[2] + keyHeightOnHover]
 
-    //animation
+    //Animation
     const [keyHovered, setKeyHovered] = useState(false)
 
     const { position } = useSpring<{ position: [number, number, number] }>({
@@ -40,7 +72,10 @@ export default function Keycap(props: {baseKeyposition: [number, number, number]
                     setKeyHovered(true)
                 }}
                 onPointerOut={() => setKeyHovered(false)}
-                onClick={(e) => onKeyClick(e)}
+                onClick={(e) => {
+                    e.stopPropagation()
+                    onKeyClick(def_language)
+                }}
             >
                 <Clone object={keycaps.scene} />
             </animated.group>
@@ -48,6 +83,6 @@ export default function Keycap(props: {baseKeyposition: [number, number, number]
     )
 }
 
-function onKeyClick(e: any) {
-    console.log("Key clicked:", e.object.name)
+function onKeyClick(language: string) {
+    console.log("Key clicked: key language is", language)
 }

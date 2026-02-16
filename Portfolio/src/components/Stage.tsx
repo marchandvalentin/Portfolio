@@ -6,17 +6,19 @@ export default function Stage() {
 
             //LIGHTS
             <ambientLight 
-                intensity={1} />
+                intensity={0.25} />
 
             <directionalLight 
-                position={[0, 5, 5]} 
-                intensity={2} />
+                position={[0, 10, 10]} 
+                intensity={2}
+                castShadow
+                shadow-mapSize={[1024, 1024]} />
         
             //CAMERA
             <PerspectiveCamera 
                 makeDefault
                 position={[0, 0, 5]} 
-                fov={40} />
+                fov={50} />
 
             //DEBUG HELPER
 
