@@ -10,6 +10,7 @@ export const Language = {
     C : { name: "C", url : "/Textures/c_texture.png"},
     Python : { name: "Python", url : "/Textures/python_texture.png"},
     Csharp : { name: "C#", url : "/Textures/csharp_texture.png"},
+    Kotlin : { name: "Kotlin", url : ""},
 } as const
 
 export type Language = (typeof Language)[keyof typeof Language]

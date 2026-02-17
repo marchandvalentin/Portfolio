@@ -1,15 +1,15 @@
 import { Canvas } from "@react-three/fiber";
 import Stage from "./Stage";
-import TV from "./TV";
 import Keyboard from "./Keyboard";
+import OldTv from "./OldTv";
 
 export default function SceneRoot() {
   return (
     <div className="w-full h-screen">
       <Canvas shadows>
         <Stage />
-        <TV />
         <Keyboard />
+        <OldTv />
       </Canvas>
     </div>
   )

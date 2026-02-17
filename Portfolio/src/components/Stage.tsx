@@ -17,7 +17,7 @@ export default function Stage() {
             //CAMERA
             <PerspectiveCamera 
                 makeDefault
-                position={[0, 0, 5]} 
+                position={[0, 0, 3]} 
                 fov={50} />
 
             //DEBUG HELPER
