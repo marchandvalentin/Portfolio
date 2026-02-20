@@ -3,8 +3,10 @@ import { useRef } from "react"
 import type { Mesh } from "three/src/objects/Mesh.js"
 import Keycap from "./Keycap"
 import { Language } from "../constants/language"
+import { useFrame } from "@react-three/fiber"
 
-export default function Keyboard() {
+export default function Keyboard(props: { callbackToParent: (language: string) => void }) 
+{
     //MODEL LOADING
     const keyboardFrame = useGLTF('models/KeyBoardFrame.glb')
     
@@ -14,13 +16,15 @@ export default function Keyboard() {
     let allKeysIndex = 0; // This index is used to keep track of the current key index across rows
     
     const spacingInBetweenKeys = 0.37
-    
+    const offsetFromKeyboardFrame = 2.25
+
     //to position the keys
     const keys = {
         positions: Array.from({ length: 15 }, (_, i) => [0 - (i * spacingInBetweenKeys) + 2.75, 0.3, -0.325]) // Example positions for 10 keys
     }
 
     const languagesToMap = Object.values(Language) // Extract language objects as array
+
 
     return (
         <>
@@ -30,7 +34,7 @@ export default function Keyboard() {
             <primitive 
                 ref={keyboardFrameRef}
                 object={keyboardFrame.scene} 
-                position={[-0.25, -0.5, -3]}    // [x, y, z]
+                position={[-0.25, -2.75, -3]}    // [x, y, z]
                 rotation={[Math.PI / 6, 0, 0]}  // [x, y, z]
             />
 
@@ -46,8 +50,9 @@ export default function Keyboard() {
                     <Keycap
                         language={languagesToMap[currentIndex]?.name} 
                         textureURL={languagesToMap[currentIndex]?.url}
+                        callbackToParent={props.callbackToParent}
                         key={currentIndex}
-                        baseKeyposition={[position[0], position[1], position[2] - 3]} 
+                        baseKeyposition={[position[0], position[1]-offsetFromKeyboardFrame, position[2] - 3]} 
                     />
                 );
             })}
@@ -59,8 +64,9 @@ export default function Keyboard() {
                     <Keycap
                         language={languagesToMap[currentIndex]?.name} 
                         textureURL={languagesToMap[currentIndex]?.url}
+                        callbackToParent={props.callbackToParent}
                         key={currentIndex}
-                        baseKeyposition={[position[0], position[1]-0.175, position[2] - 2.68]} 
+                        baseKeyposition={[position[0], position[1]-0.175-offsetFromKeyboardFrame, position[2] - 2.68]} 
                     />
                 );
             })}
@@ -72,8 +78,9 @@ export default function Keyboard() {
                     <Keycap
                         language={languagesToMap[currentIndex]?.name} 
                         textureURL={languagesToMap[currentIndex]?.url}
+                        callbackToParent={props.callbackToParent}
                         key={currentIndex}
-                        baseKeyposition={[position[0], position[1]-0.35, position[2] - 2.36]} 
+                        baseKeyposition={[position[0], position[1]-0.35-offsetFromKeyboardFrame, position[2] - 2.36]} 
                     />
                 );
             })}
@@ -85,8 +92,9 @@ export default function Keyboard() {
                     <Keycap
                         language={languagesToMap[currentIndex]?.name} 
                         textureURL={languagesToMap[currentIndex]?.url}
+                        callbackToParent={props.callbackToParent}
                         key={currentIndex}
-                        baseKeyposition={[position[0], position[1]-0.525, position[2] - 2.04]} 
+                        baseKeyposition={[position[0], position[1]-0.525-offsetFromKeyboardFrame, position[2] - 2.04]} 
                     />
                 );
             })}

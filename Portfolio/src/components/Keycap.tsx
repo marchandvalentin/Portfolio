@@ -7,7 +7,8 @@ import type { Group } from "three/examples/jsm/libs/tween.module.js"
 export default function Keycap(props: {
     baseKeyposition: [number, number, number], 
     language?: string,
-    textureURL?: string
+    textureURL?: string,
+    callbackToParent: (language: string) => void
     }) {
 
     //attributes
@@ -64,25 +65,21 @@ export default function Keycap(props: {
         <>
          <animated.group
                 ref={keycapRef}
-                position={position}  
+                position={position}
                 rotation={[Math.PI / 6, 0, 0]}  // [x, y, z]
 
                 onPointerOver={(e) => {
-                    e.stopPropagation(), 
+                    e.stopPropagation() 
                     setKeyHovered(true)
                 }}
                 onPointerOut={() => setKeyHovered(false)}
                 onClick={(e) => {
                     e.stopPropagation()
-                    onKeyClick(def_language)
+                    props.callbackToParent(def_language) // Call the parent callback with the language
                 }}
             >
                 <Clone object={keycaps.scene} />
             </animated.group>
         </>
     )
-}
-
-function onKeyClick(language: string) {
-    console.log("Key clicked: key language is", language)
 }

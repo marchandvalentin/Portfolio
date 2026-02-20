@@ -6,7 +6,7 @@ export default function Stage() {
 
             //LIGHTS
             <ambientLight 
-                intensity={0.25} />
+                intensity={1} />
 
             <directionalLight 
                 position={[0, 10, 10]} 
@@ -17,7 +17,8 @@ export default function Stage() {
             //CAMERA
             <PerspectiveCamera 
                 makeDefault
-                position={[0, 0, 3]} 
+                position={[0, 0.25, 5]} 
+                rotation={[0, 0, 0]}
                 fov={50} />
 
             //DEBUG HELPER
