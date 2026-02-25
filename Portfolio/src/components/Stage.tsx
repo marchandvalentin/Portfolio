@@ -4,26 +4,15 @@ export default function Stage() {
     return (
         <>
 
-            //LIGHTS
-            <ambientLight 
-                intensity={1} />
-
-            <directionalLight 
-                position={[0, 10, 10]} 
-                intensity={2}
-                castShadow
-                shadow-mapSize={[1024, 1024]} />
-        
             //CAMERA
             <PerspectiveCamera 
                 makeDefault
-                position={[0, 0.25, 5]} 
-                rotation={[0, 0, 0]}
+                position={[-0.5, 2.5, 4.5]} 
+                rotation={[-Math.PI/10, -Math.PI / 17, 0, 'YXZ']}
                 fov={50} />
 
             //DEBUG HELPER
-
-            <OrbitControls makeDefault/>
+            {/*<OrbitControls makeDefault/>*/}
         </>
     )
 }

@@ -46,33 +46,46 @@ export default function Keycap(props: {
         }
     }, [texture])
 
-    //Calculating highKey position based on base position
-    const keyHeightOnHover = 0.1
-    const highKeyPosition: [number, number, number] = 
-    [ props.baseKeyposition[0], 
-      props.baseKeyposition[1] + keyHeightOnHover, 
-      props.baseKeyposition[2] + keyHeightOnHover]
+    
+    ////////////////////////////////////////////////////
+    // ───────────────── Animations ───────────────── //
+    ////////////////////////////////////////////////////
 
-    //Animation
     const [keyHovered, setKeyHovered] = useState(false)
 
+
+    // ───────────── Animation when mouse goes over the keycap ─────────────
+
+        // ──────── Calculating highKey position based on base position ────────
+            const keyHeightOnHover = 0.1
+            const tiltAngle = Math.PI / 15  // must match the keyboard/keycap X rotation
+            // Move along local Y axis: world Y = cos(θ), world Z = sin(θ)
+            const highKeyPosition: [number, number, number] = [ 
+                props.baseKeyposition[0], 
+                props.baseKeyposition[1] + keyHeightOnHover * Math.cos(tiltAngle), 
+                props.baseKeyposition[2] + keyHeightOnHover * Math.sin(tiltAngle)
+            ]
+        // ─────────────────────────────────────────────────────────────────────
+        
     const { position } = useSpring<{ position: [number, number, number] }>({
         position: keyHovered ? highKeyPosition : props.baseKeyposition,
-        config: { mass: 0.5, tension: 180, friction: 20 },
+        config: { mass: 1, tension: 180, friction: 20 },
     })
+
+    // ─────────────────────────────────────────────────────────────────────
 
     return (
         <>
          <animated.group
                 ref={keycapRef}
                 position={position}
-                rotation={[Math.PI / 6, 0, 0]}  // [x, y, z]
 
                 onPointerOver={(e) => {
                     e.stopPropagation() 
                     setKeyHovered(true)
                 }}
                 onPointerOut={() => setKeyHovered(false)}
+
                 onClick={(e) => {
                     e.stopPropagation()
                     props.callbackToParent(def_language) // Call the parent callback with the language
