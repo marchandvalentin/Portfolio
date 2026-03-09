@@ -14,13 +14,14 @@ export default function Keyboard(props: { callbackToParent: (language: string) =
 
     const languagesToMap = Object.values(Languages)
 
-    // ── Keyboard transform (moves the frame and the keycaps) ────
+    // ─────────── Keyboard transform (moves the frame and the keycaps) ───────────
                                                     //  [x ,  y , z]
     const KEYBOARD_POSITION: [number, number, number] = [-1.5, -2.5, -2]
     const KEYBOARD_ROTATION: [number, number, number] = [Math.PI / 50, - Math.PI / 50, 0]
     // ───────────────────────────────────────────────────────────────
 
-    // ── Key grid (offsets relative to keyboard position) ───────────
+
+    // ─────────── Key grid (offsets relative to keyboard position) ───────────
     const ROWS = 4
     const COLS = 15
 
